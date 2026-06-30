@@ -6,11 +6,15 @@ export default async function Devices(){
     .from('locations')
     .select('id, nombre_sede')
     .order('nombre_sede')
+    const { data: devices } = await createClient()
+    .from("devices")
+    .select("*, locations(nombre_sede)")
+    .order("fecha_asignacion")
   return(
         <div className="p-8">
             <h1 className="text-2xl font-bold mb-6">Dispositivos</h1>
             <CreateDeviceModal locations={locations ?? []} />
-            <DevicesTable/>
+            <DevicesTable devices={devices ?? []}/>
         </div>
     )
 }

@@ -9,5 +9,5 @@ export interface Device {
 
 
 export type DeviceWithLocation = Device & {
-    location: Pick<Location, "nombre_sede" | "ciudad" | "direccion" | "estado">;
+    locations: Pick<Location, "nombre_sede" | "ciudad" | "direccion" | "estado">;
 }
