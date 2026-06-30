@@ -1,14 +1,21 @@
 "use client"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import type { CompanyWithLocations } from '@/types'
 import { table } from "console"
 
 export function CompaniesTable({companies}: {companies: CompanyWithLocations[]}){
     const [search, setSearch] = useState("")
+    const [debouncedSearch, setDebouncedSearch] = useState("")
+    useEffect(()=>{
+      const handler = setTimeout(()=>{
+        setDebouncedSearch(search)
+      }, 400)
+      return () => clearTimeout(handler)
+    },[search])
     const filtered = companies.filter((company) =>
-        company.nombre.toLowerCase().includes(search.toLowerCase())
+        company.nombre.toLowerCase().includes(debouncedSearch.toLowerCase())
     )
-    console.log("Filtered companies:", filtered) // Agrega este console.log para depuración
+
     
     return (
         <div>

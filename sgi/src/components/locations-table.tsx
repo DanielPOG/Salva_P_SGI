@@ -1,5 +1,5 @@
 "use client"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import Swal from "sweetalert2"
 import {deleteLocation} from "@/app/actions"
 import type { LocationWithCompany } from '@/types'
@@ -8,9 +8,18 @@ import { useRouter } from "next/navigation"
 export  function LocationsTable({locations}: {locations: LocationWithCompany[]} ) {
     const [search, setSearch] = useState('')
     const router = useRouter()
+    const [debouncedSearch, setDebouncedSearch] = useState('')
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 400) 
+        return () => {
+            clearTimeout(handler)
+        }
+      }, [search])
     const filtered = locations.filter((loc) =>
-    loc.nombre_sede.toLowerCase().includes(search.toLowerCase())
-    )
+        loc.nombre_sede.toLowerCase().includes(debouncedSearch.toLowerCase())
+      )
     const handleDelete = async (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>, id: string) => {
        e.preventDefault()
                Swal.fire({
@@ -48,7 +57,6 @@ export  function LocationsTable({locations}: {locations: LocationWithCompany[]} 
             }
         })
     }
-
     return (
     <div>
       <input
