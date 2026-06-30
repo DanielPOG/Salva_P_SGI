@@ -1,4 +1,4 @@
-'use client' // 🔥 Este sí es un Client Component
+'use client' 
 
 import { useState } from 'react'
 import { Modal } from '@/components/modal'

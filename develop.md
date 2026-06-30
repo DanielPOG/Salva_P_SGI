@@ -36,38 +36,3 @@ Diseño de bd:
             . company_id (FK)
 
 Estructura y organizacion del proyecto:
-
-src/
-├── app/
-│   ├── company/
-│   │   ├── components/
-│   │   ├── actions/
-│   │   ├── schemas/
-│   │   └── page.tsx
-│   │
-│   ├── devices/
-│   │   ├── components/
-│   │   ├── actions/
-│   │   ├── schemas/
-│   │   └── page.tsx
-│   │
-│   ├── locations/
-│       ├── components/
-│       ├── actions/
-│       ├── schemas/
-│       └── page.tsx
-│   
-├── components/
-│   ├── ui/
-│   │   ├── nav-links.tsx
-│   │   ├── sidenav.tsx
-│   │   ├── 
-│   │   └── 
-│       
-│
-├── lib/
-│   ├── db.ts
-│   ├── auth.ts
-│   └── utils.ts
-│
-└── types/

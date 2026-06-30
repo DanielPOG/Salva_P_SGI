@@ -3,17 +3,28 @@
 import { useActionState } from 'react'
 import { createLocation } from '@/app/actions'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { Company } from '@/types'
 type AwaitedCreateLocationResponse = Awaited<ReturnType<typeof createLocation>>
 const initialState = {} as AwaitedCreateLocationResponse
-export function NewLocationForm({ companies }: { companies: Pick<Company, 'id' | 'nombre'>[] }) {
+interface NewLocationFormProps {
+    companies: Pick<Company, 'id' | 'nombre'>[]
+    onSuccess: () => void
+}
+
+
+export function NewLocationForm({ companies, onSuccess }: NewLocationFormProps) {
   const [state, formAction, pending] = useActionState(createLocation, initialState)
   const router = useRouter()
-
+const formRef = useRef<HTMLFormElement>(null) // <-- Referencia para controlar el HTML del formulario
   useEffect(() => {
-    if (state.success) router.push('/')
-  }, [state.success])
+    // Si la acción terminó correctamente en el servidor
+    if (state && 'success' in state && state.success) {
+      formRef.current?.reset() 
+      router.refresh()         
+      onSuccess()              
+    }
+  }, [state, onSuccess, router])
   return (
     <form action={formAction} className="flex flex-col gap-4">
       <div>
