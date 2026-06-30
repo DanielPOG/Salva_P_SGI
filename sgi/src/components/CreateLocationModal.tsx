@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Modal} from "@/components/modal"
 import { NewLocationForm } from "@/components/NewLocationForm" 
 import { useRouter } from "next/navigation"
-import { Company } from "@/types/company"
+import type { Company } from "@/types/company"
 
 export function CreateLocationModal({companies}: {companies: Pick<Company, 'id' | 'nombre'>[]}) {
     const [isOpen, setIsOpen] = useState(false)

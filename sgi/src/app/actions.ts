@@ -21,6 +21,12 @@ const locationSchema = z.object({
     .transform((val) => val === 'true'),
 })
 
+const deviceSchema = z.object({
+    serial: z.string().min(1, 'El serial es obligatorio'),
+    location_id: z.string().transform((val)=>Number(val)), 
+    fecha_asignacion: z.string().transform((val)=> new Date(val)),
+    descripcion: z.string().optional(),
+})
 // Actions
 
 export async function createCompany(prevState: any , formData: FormData){
@@ -65,4 +71,20 @@ export async function deleteLocation(id:string){
         console.error("Error deleting location:", error)
         throw error
     }
+}
+
+export async function createDevice(prevState: any, formData: FormData){
+    const validated = deviceSchema.safeParse({
+        serial: formData.get("serial"),
+        location_id: formData.get("location_id"),
+        fecha_asignacion: formData.get("fecha_asignacion"),
+        descripcion: formData.get("descripcion")
+    })
+    if (!validated.success){
+        return {errors: z.treeifyError(validated.error)}
+    }
+    const {error} = await createClient().from("devices").insert(validated.data)
+    if(error) return {message: error.message}
+    revalidatePath("/devices")
+    return {success: true}
 }
