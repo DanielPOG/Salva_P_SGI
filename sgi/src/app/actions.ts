@@ -58,4 +58,5 @@ export async function createLocation(prevState: any, formData: FormData){
 
 export async function deleteLocation(id:string){
     await createClient().from("locations").delete().eq("id",id)
+    revalidatePath("/")
 }
