@@ -1,12 +1,54 @@
 "use client"
 import {useState} from "react"
+import Swal from "sweetalert2"
 import {deleteLocation} from "@/app/actions"
 import type { LocationWithCompany } from '@/types'
+import { useRouter } from "next/navigation"
+
 export  function LocationsTable({locations}: {locations: LocationWithCompany[]} ) {
     const [search, setSearch] = useState('')
+    const router = useRouter()
     const filtered = locations.filter((loc) =>
     loc.nombre_sede.toLowerCase().includes(search.toLowerCase())
     )
+    const handleDelete = async (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>, id: string) => {
+       e.preventDefault()
+               Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esta acción!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'bg-white rounded-2xl p-6 shadow-xl border border-gray-100',
+                title: 'text-xl font-bold text-gray-800',
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200',
+                cancelButton: 'bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg mr-3'
+            },
+            buttonsStyling: false
+        }).then(async (result) => {
+            // Si el usuario confirma en la alerta visual...
+            if (result.isConfirmed) {
+                try {
+                    // Ejecutamos tu Server Action pasando el ID directamente
+                    await deleteLocation(id)
+                    router.refresh()
+                    // Alerta opcional de éxito
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: 'La sede ha sido eliminada correctamente.',
+                        icon: 'success',
+                        customClass: { confirmButton: 'bg-green-500 text-white py-2 px-4 rounded-lg' },
+                        buttonsStyling: false
+                    })
+                } catch (error) {
+                    Swal.fire('Error', 'No se pudo eliminar la sede.', 'error')
+                }
+            }
+        })
+    }
+
     return (
     <div>
       <input
@@ -34,7 +76,7 @@ export  function LocationsTable({locations}: {locations: LocationWithCompany[]} 
               <td className="p-3">{loc.ciudad}</td>
               <td className="p-3">{loc.estado ? "Activo": "Inactivo"}</td>
               <td className="p-3">
-                <form action={deleteLocation.bind(null, loc.id)}>
+                <form onSubmit={(e) => handleDelete(e, loc.id)}>
                   <button type="submit" className="text-red-500 hover:underline">
                     Eliminar
                   </button>
