@@ -1,7 +1,23 @@
-export default function Companies(){
+import { CompaniesTable } from "@/components/companies-table";
+import { createClient } from "@/lib/supabase/server";
+import { CreateCompanyModal } from "@/components/CreateCompanyModal"
+export default async function Companies(){
+    const { data: companies } = await createClient()
+    .from("companies")
+    .select(`
+        *,
+        locations (
+        nombre_sede,
+        ciudad,
+        company_id
+        )
+    `)
+    .order("nombre");
     return(
-        <>
-            Compañias
-        </>
+        <div className="p-8">
+            <h1 className="text-2xl font-bold mb-6">Compañías</h1>
+            <CreateCompanyModal />
+            <CompaniesTable companies={companies ?? []} />
+        </div>
     )
 }

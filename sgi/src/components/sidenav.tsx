@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import NavLinks from '@/components/ui/nav-links'
+import NavLinks from '@/components/nav-links'
 export default function SideNav(){
     return(
         <div className="flex h-full flex-col px-3 py-4 md:px-2">

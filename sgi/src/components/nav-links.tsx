@@ -10,12 +10,7 @@ import {
 
 import { usePathname } from 'next/dist/client/components/navigation';
 const links = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  {
-    name: 'Lugares',
-    href: '/locations',
-    icon: DocumentDuplicateIcon,
-  },
+  { name: 'Sedes', href: '/', icon: HomeIcon },
   { name: 'Compañias', href: '/companies', icon: UserGroupIcon },
   { name: 'Dispositivos', href: '/devices', icon: PhoneIcon },
 ];
