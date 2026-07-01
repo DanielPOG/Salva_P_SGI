@@ -2,6 +2,7 @@
 import {useState, useEffect} from "react"
 import type { CompanyWithLocations } from '@/types'
 import { table } from "console"
+import { SearchInput } from "./table/SearchInput"
 
 export function CompaniesTable({companies}: {companies: CompanyWithLocations[]}){
     const [search, setSearch] = useState("")
@@ -19,12 +20,10 @@ export function CompaniesTable({companies}: {companies: CompanyWithLocations[]})
     
     return (
         <div className="rounded-xl border border-gray-400 bg-white shadow-sm p-6">
-          <input
-            type="text"
+          <SearchInput
+            search={search}
+            setSearch={setSearch}
             placeholder="Buscar por nombre de compañía..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="mb-4 w-full border border-gray-500 rounded-lg px-3 py-2"
           />
           <div className="overflow-x-auto rounded-xl border border-gray-400 bg-white shadow-sm">
           

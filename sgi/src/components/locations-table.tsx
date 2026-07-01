@@ -4,6 +4,7 @@ import Swal from "sweetalert2"
 import {deleteLocation} from "@/app/actions"
 import type { LocationWithCompany } from '@/types'
 import { useRouter } from "next/navigation"
+import { SearchInput } from "./table/SearchInput"
 
 export  function LocationsTable({locations}: {locations: LocationWithCompany[]} ) {
     const [search, setSearch] = useState('')
@@ -59,12 +60,10 @@ export  function LocationsTable({locations}: {locations: LocationWithCompany[]} 
     }
     return (
     <div className="rounded-xl border border-gray-400 bg-white shadow-sm p-6">
-      <input
-        type="text"
+      <SearchInput
+        search={search}
+        setSearch={setSearch}
         placeholder="Buscar por nombre de sede..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="mb-4 w-full border border-gray-500 rounded-lg px-3 py-2"
       />
       <div className="overflow-x-auto rounded-xl border border-gray-400 bg-white shadow-sm">
         <table className="w-full border-collapse">

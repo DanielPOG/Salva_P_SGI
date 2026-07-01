@@ -2,6 +2,7 @@
 import {useEffect, useState} from "react"
 import type { DeviceWithLocation } from "@/types"
 import { useRouter } from "next/navigation"
+import { SearchInput } from "./table/SearchInput"
 export function DevicesTable({devices}: {devices: DeviceWithLocation[]}){
     const [search, setSearch] = useState("")
     const router = useRouter()
@@ -17,13 +18,11 @@ export function DevicesTable({devices}: {devices: DeviceWithLocation[]}){
     console.log("Filtered devices:", filtered) // Log the filtered devices for debugging
     return(
         <div className="rounded-xl border border-gray-400 bg-white shadow-sm p-6">
-            <input
-                type="text"
-                placeholder="Buscar por serial"
-                value={search}
-                onChange={(e)=> setSearch(e.target.value)}
-                className="mb-4 w-full border border-gray-500 rounded-lg px-3 py-2"
-           />
+            <SearchInput
+            search={search}
+            setSearch={setSearch}
+            placeholder="Buscar por serial..."
+            />
            <div className="overflow-x-auto rounded-xl border border-gray-400 bg-white shadow-sm">
             <table className="w-full border-collapse">
                     <thead>
