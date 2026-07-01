@@ -11,10 +11,12 @@ export default async function Devices(){
     .select("*, locations(nombre_sede)")
     .order("fecha_asignacion")
   return(
-        <div className="p-8">
-            <h1 className="text-2xl font-bold mb-6">Dispositivos</h1>
-            <CreateDeviceModal locations={locations ?? []} />
+        <main className="max-w-7xl mx-auto p-8">
+            <div  className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold mb-6">Dispositivos</h1>
+                <CreateDeviceModal locations={locations ?? []} />
+            </div>
             <DevicesTable devices={devices ?? []}/>
-        </div>
+        </main>
     )
 }

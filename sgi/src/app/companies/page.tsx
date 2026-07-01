@@ -14,10 +14,12 @@ export default async function Companies(){
     `)
     .order("nombre");
     return(
-        <div className="p-8">
-            <h1 className="text-2xl font-bold mb-6">Compañías</h1>
-            <CreateCompanyModal />
+        <main className="max-w-7xl mx-auto p-8">
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold mb-6">Compañías</h1>
+                <CreateCompanyModal />
+            </div>
             <CompaniesTable companies={companies ?? []} />
-        </div>
+        </main>
     )
 }

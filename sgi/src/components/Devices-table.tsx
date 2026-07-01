@@ -16,34 +16,36 @@ export function DevicesTable({devices}: {devices: DeviceWithLocation[]}){
         device.serial.toLowerCase().includes(debouncedSearch.toLowerCase()))
     console.log("Filtered devices:", filtered) // Log the filtered devices for debugging
     return(
-        <div>
+        <div className="rounded-xl border border-gray-400 bg-white shadow-sm p-6">
             <input
                 type="text"
                 placeholder="Buscar por serial"
                 value={search}
                 onChange={(e)=> setSearch(e.target.value)}
-                className="mb-4 w-full border rounded px-3 py-2"
+                className="mb-4 w-full border border-gray-500 rounded-lg px-3 py-2"
            />
-           <table className="w-full border-collapse">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="p-3 text-left">Serial</th>
-                        <th className="p-3 text-left">Sede</th>
-                        <th className="p-3 text-left">Fecha de asignación</th>
-                        <th className="p-3 text-left">Descripción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filtered.map((device)=>(
-                        <tr key={device.id} className="border-b">
-                            <td className="p-3">{device.serial}</td>
-                            <td className="p-3">{device.locations?.nombre_sede ?? "N/A"}</td>
-                            <td className="p-3">{new Date(device.fecha_asignacion).toLocaleDateString()}</td>
-                            <td className="p-3">{device.descripcion ?? "N/A"}</td>
+           <div className="overflow-x-auto rounded-xl border border-gray-400 bg-white shadow-sm">
+            <table className="w-full border-collapse">
+                    <thead>
+                        <tr className="bg-gray-100 tex-center">
+                            <th className="px-6 py-4">Serial</th>
+                            <th className="px-6 py-4 ">Sede</th>
+                            <th className="px-6 py-4 ">Fecha de asignación</th>
+                            <th className="px-6 py-4 ">Descripción</th>
                         </tr>
-                    ))}
-                </tbody>
-           </table>
+                    </thead>
+                    <tbody>
+                        {filtered.map((device)=>(
+                            <tr key={device.id} className="text-center hover:bg-slate-200 transition-colors">
+                                <td className="p-3">{device.serial}</td>
+                                <td className="p-3">{device.locations?.nombre_sede ?? "N/A"}</td>
+                                <td className="p-3">{new Date(device.fecha_asignacion).toLocaleDateString()}</td>
+                                <td className="p-3">{device.descripcion ?? "N/A"}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+            </table>
+           </div>
         </div>
     )
 }

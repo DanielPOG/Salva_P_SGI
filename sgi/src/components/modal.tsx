@@ -28,7 +28,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
           </button>
         </div>
 
-        {/* Cuerpo (Aquí caerá el formulario) */}
+        {/* Cuerpo (Aquí cae el formulario) */}
         <div>{children}</div>
       </div>
     </div>

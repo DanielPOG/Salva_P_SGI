@@ -22,14 +22,12 @@ export function NewCompanyForm({ onSuccess }: NewCompanyFormProps) {
   }, [state, onSuccess])
 
   return (
-    <main className="p-8 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Nueva Compañía</h1>
       <form action={formAction} className="flex flex-col gap-4">
-        
         {/* Campo Nombre */}
         <div>
           <label className="block text-sm font-medium mb-1">Nombre</label>
-          <input name="nombre" type="text" className="w-full border rounded px-3 py-2" />
+          <input name="nombre" type="text" className="w-full rounded-lg border border-slate-400 px-3 py-2.5 text-sm
+              focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition" />
           
           {state && 'errors' in state && state.errors?.properties?.nombre?.errors && (
             <p className="text-red-500 text-sm mt-1">
@@ -41,7 +39,8 @@ export function NewCompanyForm({ onSuccess }: NewCompanyFormProps) {
         {/* Campo NIT */}
         <div>
           <label className="block text-sm font-medium mb-1">NIT</label>
-          <input name="NIT" type="text" className="w-full border rounded px-3 py-2" />
+          <input name="NIT" type="text" className="w-full rounded-lg border border-slate-400 px-3 py-2.5 text-sm
+              focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition" />
           
           {state && 'errors' in state && state.errors?.properties?.NIT?.errors && (
             <p className="text-red-500 text-sm mt-1">
@@ -57,11 +56,10 @@ export function NewCompanyForm({ onSuccess }: NewCompanyFormProps) {
         <button
           type="submit"
           disabled={pending}
-          className="bg-blue-600 text-white rounded px-4 py-2 disabled:opacity-50"
+          className="bg-sky-300 text-black px-4 py-2 rounded hover:bg-sky-400 transition"
         >
           {pending ? 'Guardando...' : 'Crear Compañía'}
         </button>
       </form>
-    </main>
   )
 }
