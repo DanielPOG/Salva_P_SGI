@@ -11,6 +11,10 @@ export default async function Devices(){
     .from("devices")
     .select("*, locations(nombre_sede)")
     .order("fecha_asignacion")
+    const {data: devicesUnassigned}= await createClient()
+    .from("devices")
+    .select("id, serial, location_id")
+
   return(
         <main className="max-w-7xl mx-auto p-8">
             <div  className="flex items-center justify-between">
@@ -21,7 +25,7 @@ export default async function Devices(){
                 <div className="md:grid grid-cols-1 ml-5 lg:grid-cols-2 gap-4">
                     {/* TODO: Añadir funcion de asignacion  */}
                     <CreateDeviceModal locations={locations ?? []} />
-                    <AssignDeviceModal locations={locations ?? []} />
+                    <AssignDeviceModal locations={locations ?? []} devicesUnassigned={devicesUnassigned ?? []} />
                 </div>
             </div>
             <div className="mb-4">

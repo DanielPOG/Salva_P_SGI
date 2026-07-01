@@ -11,8 +11,8 @@ import {
 import { usePathname } from 'next/dist/client/components/navigation';
 const links = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
-  { name: 'Sedes', href: '/sedes', icon: DocumentDuplicateIcon },
   { name: 'Compañias', href: '/companies', icon: UserGroupIcon },
+  { name: 'Sedes', href: '/sedes', icon: DocumentDuplicateIcon },
   { name: 'Dispositivos', href: '/devices', icon: PhoneIcon },
 ];
 

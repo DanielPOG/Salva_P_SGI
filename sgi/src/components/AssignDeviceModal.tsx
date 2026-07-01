@@ -2,10 +2,11 @@
 
 import { useState } from "react"
 import { Modal } from "@/components/modal"
-import { NewDeviceForm } from "@/components/NewDeviceForm"
 import { useRouter } from "next/navigation"
 import type { Location } from "@/types/location"
-export function AssignDeviceModal({locations}: {locations: Pick<Location, "id" | "nombre_sede">[]}) {
+import type { Device } from "@/types/device"
+import { AssignDeviceForm } from "@/components/AssignDeviceForm"
+export function AssignDeviceModal({locations, devicesUnassigned}: {locations: Pick<Location, "id" | "nombre_sede">[]; devicesUnassigned: Pick<Device, "id" | "serial">[]}) {
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
     const handleSuccess = ()=>{
@@ -22,7 +23,7 @@ export function AssignDeviceModal({locations}: {locations: Pick<Location, "id" |
             </button>
 
             <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Asignar Nuevo Dispositivo">
-                <NewDeviceForm locations={locations} onSuccess={handleSuccess} />
+                <AssignDeviceForm locations={locations} devicesUnassigned={devicesUnassigned} onSuccess={handleSuccess} />
             </Modal>
         </>
     )

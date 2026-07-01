@@ -28,7 +28,7 @@ export function NewDeviceForm({locations, onSuccess}: NewDeviceFormProps){
     return(
         <form action={formAction} className="flex flex-col gap-4">
             <div>
-                <label className="block text-sm font-medium mb-1 ">Dispositivos</label>
+                <label className="block text-sm font-medium mb-1 ">Sede (opcional)</label>
                 <select name="location_id" className="w-full rounded-lg border border-slate-400 px-3 py-2.5 text-sm
               focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition">
                     <option value="">Selecciona una sede...</option>

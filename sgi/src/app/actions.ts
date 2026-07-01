@@ -27,9 +27,16 @@ const locationSchema = z.object({
 
 const deviceSchema = z.object({
     serial: z.string().min(1, 'El serial es obligatorio'),
-    location_id: z.string().transform((val)=>Number(val)), 
+    location_id: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable().optional())
+    .transform((val) => (val ? Number(val) : null))
+    .nullable(),
     fecha_asignacion: z.string().transform((val)=> new Date(val)),
     descripcion: z.string().optional(),
+})
+const deviceAssignmentSchema = z.object({
+    serial: z.string().min(1, 'El serial es obligatorio'),
+    location_id: z.string().transform((val)=>Number(val)),
 })
 // Actions
 
@@ -89,16 +96,35 @@ export async function deleteLocation(id:string){
 }
 
 export async function createDevice(prevState: any, formData: FormData){
+    const locationInput= formData.get("location_id")
+    const fechaInput= formData.get("fecha_asignacion")
+    const fechaFinal = fechaInput && fechaInput !== "" 
+    ? new Date(fechaInput as string).toISOString() 
+    : new Date().toISOString(); 
     const validated = deviceSchema.safeParse({
         serial: formData.get("serial"),
-        location_id: formData.get("location_id"),
-        fecha_asignacion: formData.get("fecha_asignacion"),
+        location_id: locationInput ? Number(locationInput) : null,
+        fecha_asignacion: fechaFinal,
         descripcion: formData.get("descripcion")
     })
     if (!validated.success){
         return {errors: z.treeifyError(validated.error)}
     }
     const {error} = await createClient().from("devices").insert(validated.data)
+    if(error) return {message: error.message}
+    revalidatePath("/devices")
+    return {success: true}
+}
+export async function assignDeviceToLocation(prevState: any, formData: FormData){
+    const validated = deviceAssignmentSchema.safeParse({
+        serial: formData.get("serial"),
+        location_id: formData.get("location_id")
+    })
+    if(!validated.success){
+        console.log("erro",JSON.stringify(validated.error.format(), null, 2))
+        return {errors: z.treeifyError(validated.error)}
+    }
+    const {error} = await createClient().from("devices").update({location_id: validated.data.location_id, fecha_asignacion: new Date().toISOString()}).eq("serial", validated.data.serial)
     if(error) return {message: error.message}
     revalidatePath("/devices")
     return {success: true}
