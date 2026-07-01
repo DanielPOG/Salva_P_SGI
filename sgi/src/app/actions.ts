@@ -29,7 +29,6 @@ const deviceSchema = z.object({
     serial: z.string().min(1, 'El serial es obligatorio'),
     location_id: z
     .preprocess((val) => (val === "" ? null : val), z.string().nullable().optional())
-    .transform((val) => (val ? Number(val) : null))
     .nullable(),
     fecha_asignacion: z.string().transform((val)=> new Date(val)),
     descripcion: z.string().optional(),
@@ -103,7 +102,7 @@ export async function createDevice(prevState: any, formData: FormData){
     : new Date().toISOString(); 
     const validated = deviceSchema.safeParse({
         serial: formData.get("serial"),
-        location_id: locationInput ? Number(locationInput) : null,
+        location_id: locationInput ? locationInput : null,
         fecha_asignacion: fechaFinal,
         descripcion: formData.get("descripcion")
     })
