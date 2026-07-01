@@ -25,7 +25,7 @@ export function CreateCompanyModal() {
       </button>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Registrar Nueva Compañía">
-        <NewCompanyForm onSuccess={handleSuccess} />
+        <NewCompanyForm mode="create" onSuccess={handleSuccess} />
       </Modal>
     </>
   )

@@ -12,11 +12,14 @@ export default async function Companies(){
         company_id
         )
     `)
-    .order("nombre");
+    .order("fecha_creacion", { ascending: false });
     return(
         <main className="max-w-7xl mx-auto p-8">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold mb-6">Compañías</h1>
+                <div className="grid grid-cols-1 mb-4">
+                    <h1 className="text-3xl font-bold mb-4">Compañías</h1>
+                    <h2 className="text-xs font-light opacity-75">Gestión de compañías y sus respectivas sedes.</h2>
+                </div>
                 <CreateCompanyModal />
             </div>
             <CompaniesTable companies={companies ?? []} />

@@ -11,8 +11,8 @@ export default async function Home(){
     .eq("estado", true);
 
     return(
-        <main className="p-3">
-            <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+        <main className="max-w-7xl mx-auto p-8">
+            <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
             <h2 className="text-xs font-light opacity-75">Resumen del inventario, sedes y mantenimiento de dispositivos médicos.</h2>
             <article className="mt-6">
                 <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">

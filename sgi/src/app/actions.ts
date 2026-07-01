@@ -10,6 +10,10 @@ const companySchema = z.object({
   NIT: z.string().min(1, 'El NIT es obligatorio'),
 })
 
+const companyUpdateSchema = z.object({
+    nombre: z.string().min(1, 'El nombre es obligatorio'),
+})
+
 const locationSchema = z.object({
   company_id: z.string()
   .min(1, 'Debes seleccionar una compañía válida')
@@ -44,7 +48,18 @@ export async function createCompany(prevState: any , formData: FormData){
     revalidatePath("/companies")
     return {success: true}
 }   
-
+export async function updateCompany(companyId: string, prevState: any, formData: FormData){
+    const validated = companyUpdateSchema.safeParse({
+        nombre: formData.get("nombre"),
+    })
+    if(!validated.success){
+        return {errors: z.treeifyError(validated.error)}
+    }
+    const {error} = await createClient().from("companies").update(validated.data).eq("id", companyId)
+    if(error) return {message: error.message}
+    revalidatePath("/companies")
+    return {success: true}
+}   
 export async function createLocation(prevState: any, formData: FormData){
     const validated = locationSchema.safeParse({
         company_id: formData.get('company_id'),
@@ -58,7 +73,7 @@ export async function createLocation(prevState: any, formData: FormData){
     }
     const {error} = await createClient().from("locations").insert(validated.data)
     if(error) return {message: error.message}
-    revalidatePath("/")
+    revalidatePath("/sedes")
     return {success: true}
 }
 
@@ -66,7 +81,7 @@ export async function deleteLocation(id:string){
     try {
 
         await createClient().from("locations").delete().eq("id",id)
-        revalidatePath("/")
+        revalidatePath("/sedes")
     }catch (error) {
         console.error("Error deleting location:", error)
         throw error
