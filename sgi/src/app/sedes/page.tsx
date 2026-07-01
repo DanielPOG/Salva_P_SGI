@@ -13,10 +13,10 @@ export default async function Home() {
     .select('id, nombre')
     .order('nombre')
   return (
-    <div className="p-8">
+    <main className="p-8">
       <h1 className="text-2xl font-bold mb-6">Sedes</h1>
       <CreateLocationModal companies={companies ?? []} />
       <LocationsTable locations={locations ?? []} />
-    </div>
+    </main>
   );
 }

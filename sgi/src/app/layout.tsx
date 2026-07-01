@@ -33,7 +33,7 @@ export default function RootLayout({
             <SideNav />
           </section>
         </aside>
-        <main className="grow p-6 md:overflow-y-auto md:p-12">
+        <main className="grow bg-sky-50 p-6 md:overflow-y-auto md:p-12">
           {children}
         </main>
       </body>
